@@ -7,8 +7,9 @@ from time import time
 from os.path import basename, join, splitext
 
 # input/output files
-MAZE_FPATH = join('mazes', 'maze_small.png')
-#MAZE_FPATH = join('mazes', 'maze_large.png')
+MAZE_FPATH = join('mazes', '4777.png')
+# MAZE_FPATH = join('mazes', 'maze_small.png')
+# MAZE_FPATH = join('mazes', 'maze_large.png')
 OUTP_FPATH = join('solns', '%s_soln.png' % splitext(basename(MAZE_FPATH))[0])
 
 
@@ -26,13 +27,14 @@ def main():
 
     assert grid.min() == 1, 'cost of moving must be at least 1'
 
-    # start is the first white block in the top row
     start_j, = np.where(grid[0, :] == 1)
     start = np.array([0, start_j[0]])
-
-    # end is the first white block in the final column
+    #
     end_i, = np.where(grid[:, -1] == 1)
     end = np.array([end_i[0], grid.shape[0] - 1])
+    start = np.array([33, 65])   # [y, x]
+    end = np.array([56,880])
+
 
     t0 = time()
     # set allow_diagonal=True to enable 8-connectivity
@@ -47,8 +49,6 @@ def main():
         cv2.imwrite(OUTP_FPATH, maze)
     else:
         print('no path found')
-
-    print('done')
 
 
 if __name__ == '__main__':
