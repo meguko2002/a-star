@@ -9,11 +9,13 @@ image_path = '../mazes'
 save_path = '../solns'
 image_files = ['4777.png' ,'maze_small.png','images.jpeg', 'rectangle_large.png','add.png']
 image_file = image_files[4]
+
+blue = (255,0,0)
+red = (0, 0, 255)
 start = np.zeros ( 2 )  # [y, x]
 goal = np.zeros ( 2 )
-
 THICK = 1
-mode = {'startset': 0, 'endset': 0, 'ready': 0}
+mode = {'startset': 0, 'endset': 0, 'ready': 0, 'inout': 0}
 
 
 def root_finder(maze , start , goal):
@@ -35,22 +37,23 @@ def draw_circle(event , x , y , flags , param):
         if event == cv2.EVENT_LBUTTONDOWN:
             if mode['startset'] == 0:
                 print ( "start set" )
-                maze = original_image.copy ()
+                if mode['inout'] == 0:  # モード0なら毎回画面クリア
+                    maze = original_image.copy ()
                 start = np.array ( [y , x] )
-                cv2.circle ( maze , (x , y) , 5 , (255 , 0 , 0) , -1 )
+                cv2.circle ( maze , (x , y) , 5 ,blue, -1 )
                 mode['startset'] = 1
             elif mode['endset'] == 0:
                 print ( "goal set" )
                 goal = np.array ( [y , x] )
-                cv2.circle ( maze , (x , y) , 5 , (0 , 0 , 255) , 1 )
+                cv2.circle ( maze , (x , y) , 5 , red, 1 )
                 mode['endset'] = 1
 
 
 def start_adventure():
     global maze
-
+    color = blue
     for i in range ( len ( root ) ):
-        maze[root[i , 0] - THICK:root[i , 0] + THICK , root[i , 1] - THICK:root[i , 1] + THICK] = (255 , 0 , 0)
+        maze[root[i , 0] - THICK:root[i , 0] + THICK , root[i , 1] - THICK:root[i , 1] + THICK ] = color
         cv2.imshow ( "Loaded image" , maze )
         if cv2.waitKey ( 1 ) == ord ( 'q' ):
             break
@@ -73,6 +76,7 @@ while True:
         cv2.imwrite ( os.path.join ( save_path , image_file), maze )
         break
 
+    # todo 経路を残すモードを追加、追加経路は別の色にする
     if mode['startset'] == 1 and mode['endset'] == 1:
         root = root_finder ( original_image, start , goal )  # ルート探索
 

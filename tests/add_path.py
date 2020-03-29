@@ -34,7 +34,7 @@ original_image = maze.copy ()  # 元画像をコピーしておく
 while True:
     cv2.imshow ( "Loaded image" , maze)
     k = cv2.waitKey ( 1 )
-    if k == 27:  # wait for ESC key to exit
+    if k == ord ( '' ):  # wait for ESC key to exit
         break
     elif k == ord ( 's' ):  # wait for 's' key to save and exit
         cv2.imwrite ( join ( image_path , 'add.png' ), maze )
