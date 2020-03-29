@@ -1,15 +1,14 @@
 import cv2
 import numpy as np
-import sys
+import sys, os
 
 sys.path.append ( "../" )
 import pyastar
-from os.path import join
 
 image_path = '../mazes'
-image_files=['4777.png' ,'maze_small.png','images.jpeg', 'rectangle_large.png']
-MAZE_FPATH = join ( image_path ,image_files[3])
-
+save_path = '../solns'
+image_files = ['4777.png' ,'maze_small.png','images.jpeg', 'rectangle_large.png','add.png']
+image_file = image_files[4]
 start = np.zeros ( 2 )  # [y, x]
 goal = np.zeros ( 2 )
 
@@ -26,7 +25,7 @@ def root_finder(maze , start , goal):
 
     assert grid.min () == 1 , 'cost of moving must be at least 1'
     # ルート探索
-    root = pyastar.astar_path ( grid , start , goal , allow_diagonal=False )
+    root = pyastar.astar_path ( grid , start , goal , allow_diagonal=True )
     return root
 
 
@@ -56,9 +55,7 @@ def start_adventure():
         if cv2.waitKey ( 1 ) == ord ( 'q' ):
             break
 
-
-maze = cv2.imread ( MAZE_FPATH )
-# todo 二値化
+maze = cv2.imread (os.path.join ( image_path ,image_file))
 original_image = maze.copy ()  # 元画像をコピーしておく
 if maze is None:
     print ( 'no file found' )
@@ -70,7 +67,12 @@ cv2.setMouseCallback ( "Loaded image" , draw_circle)
 while True:
     cv2.imshow ( "Loaded image" , maze )
     key = cv2.waitKey ( 1 )
-    # if key == #todo keyで中断
+    if key == ord ( 'q' ):
+        break
+    elif key == ord('s'):
+        cv2.imwrite ( os.path.join ( save_path , image_file), maze )
+        break
+
     if mode['startset'] == 1 and mode['endset'] == 1:
         root = root_finder ( original_image, start , goal )  # ルート探索
 
@@ -88,3 +90,6 @@ while True:
             mode['ready'] = 0
             mode['startset'] = 0
             mode['endset'] = 0
+
+cv2.destroyAllWindows ()
+
