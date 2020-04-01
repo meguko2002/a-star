@@ -1,6 +1,6 @@
 ## A\*-animation
 To watch running through maze, run ```animation.test``` in the ```tests``` directory.
-Click start & goal position, and it will automatically star.
+Click start posiion, goal position, and it will automatically start.
 
 
 
