@@ -27,7 +27,7 @@ def root_finder(maze , start , goal):
 
     assert grid.min () == 1 , 'cost of moving must be at least 1'
     # ルート探索
-    root = pyastar.astar_path ( grid , start , goal , allow_diagonal=True )
+    root = pyastar.astar_path ( grid , start , goal , allow_diagonal=False)
     return root
 
 
