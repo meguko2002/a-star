@@ -1,3 +1,9 @@
+## A\*-animation
+To watch running through maze, run ```animation.test``` in the ```tests``` directory.
+Click start & goal position, and it will automatically star.
+
+
+
 # A\*
 This is a very simple C++ implementation of the A\* algorithm for pathfinding
 on a two-dimensional grid.  The compiled ```astar.so``` file is callable from Python.  See ```pyastar.py``` for the Python wrapper and
