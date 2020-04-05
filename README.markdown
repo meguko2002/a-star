@@ -1,6 +1,6 @@
 ## A\*-animation
-To watch running through maze, run ```animation.test``` in the ```tests``` directory.
-Click start posiion, goal position, and it will automatically start.
+To watch passing through the map, run ```animation.test``` in the ```tests``` directory.
+Put start and goal position by clicking onto the map, and footprint will soon be shown.
 
 
 
